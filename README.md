@@ -1,3 +1,7 @@
+# hexdump
+
+https://pypi.org/project/hexdump/
+Import from (dead) https://bitbucket.org/techtonik/hexdump/ https://bitbucket-archive.softwareheritage.org/projects/te/techtonik/hexdump.html
 
 What is it about?
 
