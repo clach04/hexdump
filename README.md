@@ -112,9 +112,10 @@ Automatically with `tox`::
 
 questions
 =========
-| Q: Why creating another module when there is binascii already?
-| A: ``binascii.unhexlify()`` chokes on whitespaces and linefeeds.
-| ``hexdump.dehex()`` doesn't have this problem.
+
+Q: Why creating another module when there is binascii already?
+A: ``binascii.unhexlify()`` chokes on whitespaces and linefeeds.
+ ``hexdump.dehex()`` doesn't have this problem.
 
 If you have other questions, feel free to open an issue
 at https://bitbucket.org/techtonik/hexdump/
@@ -194,10 +195,10 @@ ChangeLog
 Release checklist
 =================
 
-| [ ] run tests
-| [ ] update version in hexdump.py and README.txt
-| [ ] update ChangeLog in README.txt from hexdump.py
-| [ ] python setup.py register sdist upload
+- [ ] run tests
+- [ ] update version in hexdump.py and README.txt
+- [ ] update ChangeLog in README.txt from hexdump.py
+- [ ] python setup.py register sdist upload
 
 
 License
@@ -207,6 +208,7 @@ Public Domain
 
 Credits
 =======
-| anatoly techtonik <techtonik@gmail.com>
-| George Schizas
-| Ian Land
+
+anatoly techtonik <techtonik@gmail.com>
+George Schizas
+Ian Land
