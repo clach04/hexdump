@@ -11,36 +11,36 @@ command line
 ============
 There are three ways to execute hexdump.py from command line::
 
-   $ python hexdump.py
-   $ python hexdump-3.2.zip
+    $ python hexdump.py
+    $ python hexdump-3.2.zip
 
-   # after installing with `pip install hexdump`
-   $ python -m hexdump
+    # after installing with `pip install hexdump`
+    $ python -m hexdump
 
 Dump binary data in hex form::
 
-   $ python -m hexdump binary.dat
-   0000000000: 00 00 00 5B 68 65 78 64  75 6D 70 5D 00 00 00 00  ...[hexdump]....
-   0000000010: 00 11 22 33 44 55 66 77  88 99 AA BB CC DD EE FF  .."3DUfw........
+    $ python -m hexdump binary.dat
+    0000000000: 00 00 00 5B 68 65 78 64  75 6D 70 5D 00 00 00 00  ...[hexdump]....
+    0000000010: 00 11 22 33 44 55 66 77  88 99 AA BB CC DD EE FF  .."3DUfw........
 
 Restore binary from a saved hex dump::
 
-   $ python -m hexdump --restore hexdump.txt > binary.dat
+    $ python -m hexdump --restore hexdump.txt > binary.dat
 
 
 basic API
 =========
 dump(binary, size=2, sep=' ')
 
-   Convert binary data (bytes in Python 3 and
-   str in Python 2) to string like '00 DE AD BE EF'.
-   `size` argument specifies length of text chunks
-   and `sep` sets chunk separator.
+    Convert binary data (bytes in Python 3 and
+    str in Python 2) to string like '00 DE AD BE EF'.
+    `size` argument specifies length of text chunks
+    and `sep` sets chunk separator.
 
 dehex(hextext)
 
-   Helper to convert from hex string to binary data
-   stripping whitespaces from `hextext` if necessary.
+    Helper to convert from hex string to binary data
+    stripping whitespaces from `hextext` if necessary.
 
 
 advanced API: write full dumps
@@ -48,17 +48,17 @@ advanced API: write full dumps
 
 Python 2::
 
-   >>> hexdump('\x00'*16)
-   00000000: 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  ................
+    >>> hexdump('\x00'*16)
+    00000000: 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  ................
 
 Python 3::
 
-   >>> hexdump('\x00'*16)
-   ...
-   TypeError: Abstract unicode data (expected bytes)
-   >>> hexdump.hexdump(b'\x00'*16)
-   00000000: 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  ................
- 
+    >>> hexdump('\x00'*16)
+    ...
+    TypeError: Abstract unicode data (expected bytes)
+    >>> hexdump.hexdump(b'\x00'*16)
+    00000000: 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  ................
+
 Python 3 string is a sequence of indexes in abstract unicode
 table. Each index points to a symbol, which doesn't specify
 its binary value. To convert symbol to binary data, you need
@@ -68,12 +68,12 @@ Here is how the same Russian text looks when transformed from
 abstract unicode integers of Python 3 to bytes in Windows-1251
 encoding and to bytes in UTF-8.
 
-   >>> message = 'интерференция'
-   >>> hexdump(message.encode('windows-1251'))
-   00000000: E8 ED F2 E5 F0 F4 E5 F0  E5 ED F6 E8 FF           .............
-   >>> hexdump(message.encode('utf-8'))
-   00000000: D0 B8 D0 BD D1 82 D0 B5  D1 80 D1 84 D0 B5 D1 80  ................
-   00000010: D0 B5 D0 BD D1 86 D0 B8  D1 8F                    ..........
+    >>> message = 'интерференция'
+    >>> hexdump(message.encode('windows-1251'))
+    00000000: E8 ED F2 E5 F0 F4 E5 F0  E5 ED F6 E8 FF           .............
+    >>> hexdump(message.encode('utf-8'))
+    00000000: D0 B8 D0 BD D1 82 D0 B5  D1 80 D1 84 D0 B5 D1 80  ................
+    00000010: D0 B5 D0 BD D1 86 D0 B8  D1 8F                    ..........
 
 
 advanced API: restore binary data from different hexdump formats
@@ -81,33 +81,33 @@ advanced API: restore binary data from different hexdump formats
 
 Python 2::
 
-   >>> res = restore(
-   ... '0010: 00 11 22 33 44 55 66 77  88 99 AA BB CC DD EE FF  .."3DUfw........')
-   >>> res
-   '\x00\x11"3DUfw\x88\x99\xaa\xbb\xcc\xdd\xee\xff'
-   >>> type(res)
-   <type 'str'>
+    >>> res = restore(
+    ... '0010: 00 11 22 33 44 55 66 77  88 99 AA BB CC DD EE FF  .."3DUfw........')
+    >>> res
+    '\x00\x11"3DUfw\x88\x99\xaa\xbb\xcc\xdd\xee\xff'
+    >>> type(res)
+    <type 'str'>
 
 Python 3::
 
-   >>> res = restore(
-   ... '0010: 00 11 22 33 44 55 66 77  88 99 AA BB CC DD EE FF  .."3DUfw........')
-   >>> res
-   b'\x00\x11"3DUfw\x88\x99\xaa\xbb\xcc\xdd\xee\xff'
-   >>> type(res)
-   <class 'bytes'>
+    >>> res = restore(
+    ... '0010: 00 11 22 33 44 55 66 77  88 99 AA BB CC DD EE FF  .."3DUfw........')
+    >>> res
+    b'\x00\x11"3DUfw\x88\x99\xaa\xbb\xcc\xdd\xee\xff'
+    >>> type(res)
+    <class 'bytes'>
 
 
 run self-tests
 ==============
 Manually::
 
-   $ hexdump.py --test output.txt
-   $ diff -u3 data/hextest.txt output.txt
+    $ hexdump.py --test output.txt
+    $ diff -u3 data/hextest.txt output.txt
 
 Automatically with `tox`::
 
-   $ tox
+    $ tox
 
 
 questions
@@ -194,10 +194,10 @@ ChangeLog
 Release checklist
 =================
 
-| [ ] run tests  
+| [ ] run tests
 | [ ] update version in hexdump.py and README.txt
-| [ ] update ChangeLog in README.txt from hexdump.py  
-| [ ] python setup.py register sdist upload  
+| [ ] update ChangeLog in README.txt from hexdump.py
+| [ ] python setup.py register sdist upload
 
 
 License
@@ -207,6 +207,6 @@ Public Domain
 
 Credits
 =======
-| anatoly techtonik <techtonik@gmail.com>  
-| George Schizas  
+| anatoly techtonik <techtonik@gmail.com>
+| George Schizas
 | Ian Land
