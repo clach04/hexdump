@@ -245,9 +245,11 @@ def dumpgen(data):
             color_str = color_whitespace
           else:
             color_str = color_unprintable
-        line += color_str  # FIXME only if not last
+        if last_color != color_str:
+          last_color = color_str
+          line += color_str
         line += '.'
-        line += color_reset
+    line += color_reset
     yield line
 
 def hexdump(data, result='print'):
