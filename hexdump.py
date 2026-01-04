@@ -111,6 +111,20 @@ __history__ = \
 import binascii  # binascii is required for Python 3
 import sys
 
+try:
+    import colorama
+    colorama.just_fix_windows_console()
+except ImportError:
+    colorama = None
+
+use_color = True  # hard code for now
+color_00 = colorama.Fore.WHITE
+color_FF = colorama.Fore.BLUE
+color_whitespace = colorama.Fore.YELLOW
+color_printable = colorama.Fore.GREEN
+color_unprintable = colorama.Fore.RED
+color_reset = colorama.Style.RESET_ALL
+
 # --- constants
 PY3K = sys.version_info >= (3, 0)
 
@@ -196,7 +210,7 @@ def dumpgen(data):
   for addr, d in enumerate(generator):
     # 00000000:
     line = '%08X: ' % (addr*16)
-    # 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00 
+    # 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
     dumpstr = dump(d)
     line += dumpstr[:8*3]
     if len(d) > 8:  # insert separator if needed
@@ -210,16 +224,32 @@ def dumpgen(data):
       pad += 1
     line += ' '*pad
 
+    last_color = None
     for byte in d:
       # printable ASCII range 0x20 to 0x7E
       if not PY3K:
         byte = ord(byte)
       if 0x20 <= byte <= 0x7E:
+        if use_color:
+          # figure out color? for now use green
+            line += color_printable
         line += chr(byte)
+        line += color_reset
       else:
+        if use_color:
+          if byte == 0x00:
+            color_str = color_00
+          elif byte == 0xFF:
+            color_str = color_FF
+          elif byte in (0x09, 0X0A, 0x0D):
+            color_str = color_whitespace
+          else:
+            color_str = color_unprintable
+        line += color_str  # FIXME only if not last
         line += '.'
+        line += color_reset
     yield line
-  
+
 def hexdump(data, result='print'):
   '''
   Transform binary data to the hex dump text format:
@@ -331,7 +361,7 @@ def runtest(logfile=None):
     savedstd = sys.stderr, sys.stdout
     sys.stderr = TeeOutput(sys.stderr, openlog)
     sys.stdout = TeeOutput(sys.stdout, openlog)
-    
+
 
   def echo(msg, linefeed=True):
     sys.stdout.write(msg)
